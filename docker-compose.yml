@@ -30,6 +30,22 @@ services:
     restart: on-failure
     depends_on:
       - vault
+  
+  portainer:
+    # pass: 123456!@#$%^
+    image: portainer/portainer-ce:2.19.4
+    container_name: portainer
+    restart: always
+    security_opt:
+        - no-new-privileges:true
+    volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /var/run/docker.sock:/var/run/docker.sock:ro
+        - ./docker-compose/portainer-data:/data
+    networks:
+        - ssc_music_network
+    ports:
+    - 9000:9000
 
 volumes:
   vault-data:
